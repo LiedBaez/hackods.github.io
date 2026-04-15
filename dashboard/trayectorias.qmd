@@ -32,7 +32,7 @@ format:
 import json
 from pathlib import Path
 
-ROOT = Path(".")
+ROOT = Path("../")  # relativo a dashboard/ → raíz del repo
 with open(ROOT / "data/processed/state_panel.json", encoding="utf-8") as f:
     panel = json.load(f)
 with open(ROOT / "data/processed/scenario_templates.json", encoding="utf-8") as f:

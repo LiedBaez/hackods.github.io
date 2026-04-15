@@ -30,7 +30,7 @@ format:
 import json, pandas as pd, yaml
 from pathlib import Path
 
-ROOT = Path(".")
+ROOT = Path("../")  # relativo a dashboard/ → raíz del repo
 manifest  = json.load(open(ROOT / "data/metadata/provenance_manifest.json"))
 dqr       = json.load(open(ROOT / "data/metadata/data_quality_report.json"))
 ```

@@ -32,7 +32,7 @@ format:
 import json, plotly.graph_objects as go, plotly.express as px
 from pathlib import Path
 
-ROOT = Path(".")
+ROOT = Path("../")  # relativo a dashboard/ → raíz del repo
 with open(ROOT / "data/processed/comparison_payload.json", encoding="utf-8") as f:
     comp = json.load(f)
 
