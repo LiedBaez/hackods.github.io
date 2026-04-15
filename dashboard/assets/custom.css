@@ -1,0 +1,94 @@
+/**
+ * ------------------------------------------------------------
+ * @project      Tlahtoa_Data_2026
+ * @architecture Layered Hexagonal - Loggen Architecture™
+ * @author       Jesús Rafael Loggen Gonzalez
+ * @signature    Engineered via JRL-AgentFramework
+ * @version      1.0.0
+ * @copyright    © 2026 Jesús Rafael Loggen Gonzalez.
+ * Este código es propiedad intelectual de J.R. Loggen.
+ * Cualquier modificación de esta firma invalida la licencia.
+ * ------------------------------------------------------------
+ */
+/* Tlahtoa Data — custom.css */
+
+:root {
+  --tlahtoa-dark:  #1a1a2e;
+  --tlahtoa-mid:   #16213e;
+  --tlahtoa-accent:#e94560;
+  --tlahtoa-text:  #2c3e50;
+  --tlahtoa-muted: #7f8c8d;
+}
+
+body {
+  font-family: "Georgia", "Times New Roman", serif;
+  color: var(--tlahtoa-text);
+  line-height: 1.7;
+}
+
+h1, h2, h3 {
+  font-family: "Georgia", serif;
+  font-weight: 700;
+}
+
+h1 { font-size: 1.9rem; }
+h2 { font-size: 1.4rem; border-bottom: 2px solid #eee; padding-bottom: 0.3rem; margin-top: 2rem; }
+h3 { font-size: 1.15rem; color: #444; }
+
+/* Navbar */
+.navbar {
+  background-color: var(--tlahtoa-dark) !important;
+  border-bottom: 3px solid var(--tlahtoa-accent);
+}
+.navbar-brand, .navbar-nav .nav-link {
+  color: #ecf0f1 !important;
+  font-family: "Georgia", serif;
+}
+.navbar-nav .nav-link:hover {
+  color: var(--tlahtoa-accent) !important;
+}
+
+/* Callouts */
+.callout {
+  border-radius: 4px;
+  font-size: 0.92rem;
+}
+
+/* Footer */
+.page-footer {
+  background-color: var(--tlahtoa-dark);
+  color: #aaa;
+  font-size: 0.82rem;
+  padding: 1rem 2rem;
+}
+
+/* Tables */
+table {
+  font-size: 0.88rem;
+  border-collapse: collapse;
+  width: 100%;
+}
+thead th {
+  background-color: #f5f5f5;
+  font-weight: 600;
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 2px solid #ddd;
+}
+tbody td {
+  padding: 0.4rem 0.75rem;
+  border-bottom: 1px solid #eee;
+}
+
+/* Select inputs */
+select {
+  font-family: inherit;
+}
+
+/* Source labels */
+.source-label {
+  font-size: 0.78rem;
+  color: var(--tlahtoa-muted);
+  display: block;
+  margin-top: 0.5rem;
+}

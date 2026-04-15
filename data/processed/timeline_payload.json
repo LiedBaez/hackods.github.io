@@ -1,0 +1,874 @@
+{
+  "etapas": [
+    "nacimiento",
+    "infancia",
+    "adolescencia",
+    "adultez"
+  ],
+  "estados": [
+    {
+      "clave": 7,
+      "nombre": "Chiapas",
+      "irte_score": 1.0,
+      "puntos": [
+        {
+          "etapa": "nacimiento",
+          "score": 1.0,
+          "severidad": "alto"
+        },
+        {
+          "etapa": "infancia",
+          "score": 1.0,
+          "severidad": "alto"
+        },
+        {
+          "etapa": "adolescencia",
+          "score": 1.0,
+          "severidad": "alto"
+        },
+        {
+          "etapa": "adultez",
+          "score": 1.0,
+          "severidad": "alto"
+        }
+      ]
+    },
+    {
+      "clave": 20,
+      "nombre": "Oaxaca",
+      "irte_score": 0.9016,
+      "puntos": [
+        {
+          "etapa": "nacimiento",
+          "score": 0.8972,
+          "severidad": "alto"
+        },
+        {
+          "etapa": "infancia",
+          "score": 0.8763,
+          "severidad": "alto"
+        },
+        {
+          "etapa": "adolescencia",
+          "score": 0.8962,
+          "severidad": "alto"
+        },
+        {
+          "etapa": "adultez",
+          "score": 0.9365,
+          "severidad": "alto"
+        }
+      ]
+    },
+    {
+      "clave": 12,
+      "nombre": "Guerrero",
+      "irte_score": 0.8594,
+      "puntos": [
+        {
+          "etapa": "nacimiento",
+          "score": 0.8351,
+          "severidad": "alto"
+        },
+        {
+          "etapa": "infancia",
+          "score": 0.8406,
+          "severidad": "alto"
+        },
+        {
+          "etapa": "adolescencia",
+          "score": 0.8487,
+          "severidad": "alto"
+        },
+        {
+          "etapa": "adultez",
+          "score": 0.9134,
+          "severidad": "alto"
+        }
+      ]
+    },
+    {
+      "clave": 30,
+      "nombre": "Veracruz",
+      "irte_score": 0.6447,
+      "puntos": [
+        {
+          "etapa": "nacimiento",
+          "score": 0.5702,
+          "severidad": "medio"
+        },
+        {
+          "etapa": "infancia",
+          "score": 0.6175,
+          "severidad": "medio"
+        },
+        {
+          "etapa": "adolescencia",
+          "score": 0.6211,
+          "severidad": "alto"
+        },
+        {
+          "etapa": "adultez",
+          "score": 0.77,
+          "severidad": "alto"
+        }
+      ]
+    },
+    {
+      "clave": 27,
+      "nombre": "Tabasco",
+      "irte_score": 0.5829,
+      "puntos": [
+        {
+          "etapa": "nacimiento",
+          "score": 0.5051,
+          "severidad": "medio"
+        },
+        {
+          "etapa": "infancia",
+          "score": 0.5611,
+          "severidad": "medio"
+        },
+        {
+          "etapa": "adolescencia",
+          "score": 0.5353,
+          "severidad": "medio"
+        },
+        {
+          "etapa": "adultez",
+          "score": 0.7301,
+          "severidad": "alto"
+        }
+      ]
+    },
+    {
+      "clave": 21,
+      "nombre": "Puebla",
+      "irte_score": 0.5798,
+      "puntos": [
+        {
+          "etapa": "nacimiento",
+          "score": 0.5106,
+          "severidad": "medio"
+        },
+        {
+          "etapa": "infancia",
+          "score": 0.5366,
+          "severidad": "medio"
+        },
+        {
+          "etapa": "adolescencia",
+          "score": 0.567,
+          "severidad": "medio"
+        },
+        {
+          "etapa": "adultez",
+          "score": 0.7052,
+          "severidad": "medio"
+        }
+      ]
+    },
+    {
+      "clave": 16,
+      "nombre": "Michoacán",
+      "irte_score": 0.5348,
+      "puntos": [
+        {
+          "etapa": "nacimiento",
+          "score": 0.4305,
+          "severidad": "medio"
+        },
+        {
+          "etapa": "infancia",
+          "score": 0.4712,
+          "severidad": "medio"
+        },
+        {
+          "etapa": "adolescencia",
+          "score": 0.5536,
+          "severidad": "medio"
+        },
+        {
+          "etapa": "adultez",
+          "score": 0.6839,
+          "severidad": "alto"
+        }
+      ]
+    },
+    {
+      "clave": 4,
+      "nombre": "Campeche",
+      "irte_score": 0.499,
+      "puntos": [
+        {
+          "etapa": "nacimiento",
+          "score": 0.396,
+          "severidad": "medio"
+        },
+        {
+          "etapa": "infancia",
+          "score": 0.4915,
+          "severidad": "medio"
+        },
+        {
+          "etapa": "adolescencia",
+          "score": 0.4496,
+          "severidad": "medio"
+        },
+        {
+          "etapa": "adultez",
+          "score": 0.659,
+          "severidad": "medio"
+        }
+      ]
+    },
+    {
+      "clave": 13,
+      "nombre": "Hidalgo",
+      "irte_score": 0.4824,
+      "puntos": [
+        {
+          "etapa": "nacimiento",
+          "score": 0.3858,
+          "severidad": "medio"
+        },
+        {
+          "etapa": "infancia",
+          "score": 0.4263,
+          "severidad": "medio"
+        },
+        {
+          "etapa": "adolescencia",
+          "score": 0.4982,
+          "severidad": "medio"
+        },
+        {
+          "etapa": "adultez",
+          "score": 0.6192,
+          "severidad": "medio"
+        }
+      ]
+    },
+    {
+      "clave": 24,
+      "nombre": "San Luis Potosí",
+      "irte_score": 0.4558,
+      "puntos": [
+        {
+          "etapa": "nacimiento",
+          "score": 0.3733,
+          "severidad": "medio"
+        },
+        {
+          "etapa": "infancia",
+          "score": 0.4017,
+          "severidad": "medio"
+        },
+        {
+          "etapa": "adolescencia",
+          "score": 0.4417,
+          "severidad": "medio"
+        },
+        {
+          "etapa": "adultez",
+          "score": 0.6064,
+          "severidad": "medio"
+        }
+      ]
+    },
+    {
+      "clave": 29,
+      "nombre": "Tlaxcala",
+      "irte_score": 0.4408,
+      "puntos": [
+        {
+          "etapa": "nacimiento",
+          "score": 0.3539,
+          "severidad": "medio"
+        },
+        {
+          "etapa": "infancia",
+          "score": 0.451,
+          "severidad": "medio"
+        },
+        {
+          "etapa": "adolescencia",
+          "score": 0.3877,
+          "severidad": "medio"
+        },
+        {
+          "etapa": "adultez",
+          "score": 0.5708,
+          "severidad": "medio"
+        }
+      ]
+    },
+    {
+      "clave": 32,
+      "nombre": "Zacatecas",
+      "irte_score": 0.4385,
+      "puntos": [
+        {
+          "etapa": "nacimiento",
+          "score": 0.3451,
+          "severidad": "medio"
+        },
+        {
+          "etapa": "infancia",
+          "score": 0.3516,
+          "severidad": "medio"
+        },
+        {
+          "etapa": "adolescencia",
+          "score": 0.4473,
+          "severidad": "medio"
+        },
+        {
+          "etapa": "adultez",
+          "score": 0.6101,
+          "severidad": "medio"
+        }
+      ]
+    },
+    {
+      "clave": 31,
+      "nombre": "Yucatán",
+      "irte_score": 0.4174,
+      "puntos": [
+        {
+          "etapa": "nacimiento",
+          "score": 0.3142,
+          "severidad": "medio"
+        },
+        {
+          "etapa": "infancia",
+          "score": 0.3528,
+          "severidad": "medio"
+        },
+        {
+          "etapa": "adolescencia",
+          "score": 0.4496,
+          "severidad": "medio"
+        },
+        {
+          "etapa": "adultez",
+          "score": 0.553,
+          "severidad": "medio"
+        }
+      ]
+    },
+    {
+      "clave": 18,
+      "nombre": "Nayarit",
+      "irte_score": 0.3999,
+      "puntos": [
+        {
+          "etapa": "nacimiento",
+          "score": 0.335,
+          "severidad": "medio"
+        },
+        {
+          "etapa": "infancia",
+          "score": 0.2852,
+          "severidad": "medio"
+        },
+        {
+          "etapa": "adolescencia",
+          "score": 0.3803,
+          "severidad": "medio"
+        },
+        {
+          "etapa": "adultez",
+          "score": 0.5989,
+          "severidad": "medio"
+        }
+      ]
+    },
+    {
+      "clave": 17,
+      "nombre": "Morelos",
+      "irte_score": 0.3937,
+      "puntos": [
+        {
+          "etapa": "nacimiento",
+          "score": 0.2811,
+          "severidad": "medio"
+        },
+        {
+          "etapa": "infancia",
+          "score": 0.3804,
+          "severidad": "medio"
+        },
+        {
+          "etapa": "adolescencia",
+          "score": 0.3508,
+          "severidad": "medio"
+        },
+        {
+          "etapa": "adultez",
+          "score": 0.5625,
+          "severidad": "medio"
+        }
+      ]
+    },
+    {
+      "clave": 10,
+      "nombre": "Durango",
+      "irte_score": 0.3728,
+      "puntos": [
+        {
+          "etapa": "nacimiento",
+          "score": 0.3024,
+          "severidad": "medio"
+        },
+        {
+          "etapa": "infancia",
+          "score": 0.2709,
+          "severidad": "bajo"
+        },
+        {
+          "etapa": "adolescencia",
+          "score": 0.3664,
+          "severidad": "medio"
+        },
+        {
+          "etapa": "adultez",
+          "score": 0.5516,
+          "severidad": "medio"
+        }
+      ]
+    },
+    {
+      "clave": 11,
+      "nombre": "Guanajuato",
+      "irte_score": 0.3257,
+      "puntos": [
+        {
+          "etapa": "nacimiento",
+          "score": 0.196,
+          "severidad": "medio"
+        },
+        {
+          "etapa": "infancia",
+          "score": 0.2928,
+          "severidad": "bajo"
+        },
+        {
+          "etapa": "adolescencia",
+          "score": 0.3694,
+          "severidad": "medio"
+        },
+        {
+          "etapa": "adultez",
+          "score": 0.4446,
+          "severidad": "medio"
+        }
+      ]
+    },
+    {
+      "clave": 23,
+      "nombre": "Quintana Roo",
+      "irte_score": 0.3116,
+      "puntos": [
+        {
+          "etapa": "nacimiento",
+          "score": 0.2266,
+          "severidad": "medio"
+        },
+        {
+          "etapa": "infancia",
+          "score": 0.2224,
+          "severidad": "bajo"
+        },
+        {
+          "etapa": "adolescencia",
+          "score": 0.2986,
+          "severidad": "medio"
+        },
+        {
+          "etapa": "adultez",
+          "score": 0.499,
+          "severidad": "medio"
+        }
+      ]
+    },
+    {
+      "clave": 25,
+      "nombre": "Sinaloa",
+      "irte_score": 0.3108,
+      "puntos": [
+        {
+          "etapa": "nacimiento",
+          "score": 0.2462,
+          "severidad": "medio"
+        },
+        {
+          "etapa": "infancia",
+          "score": 0.2019,
+          "severidad": "bajo"
+        },
+        {
+          "etapa": "adolescencia",
+          "score": 0.2899,
+          "severidad": "medio"
+        },
+        {
+          "etapa": "adultez",
+          "score": 0.5054,
+          "severidad": "medio"
+        }
+      ]
+    },
+    {
+      "clave": 15,
+      "nombre": "Estado de México",
+      "irte_score": 0.31,
+      "puntos": [
+        {
+          "etapa": "nacimiento",
+          "score": 0.2339,
+          "severidad": "medio"
+        },
+        {
+          "etapa": "infancia",
+          "score": 0.3252,
+          "severidad": "bajo"
+        },
+        {
+          "etapa": "adolescencia",
+          "score": 0.2967,
+          "severidad": "bajo"
+        },
+        {
+          "etapa": "adultez",
+          "score": 0.3844,
+          "severidad": "bajo"
+        }
+      ]
+    },
+    {
+      "clave": 28,
+      "nombre": "Tamaulipas",
+      "irte_score": 0.243,
+      "puntos": [
+        {
+          "etapa": "nacimiento",
+          "score": 0.1872,
+          "severidad": "bajo"
+        },
+        {
+          "etapa": "infancia",
+          "score": 0.1778,
+          "severidad": "bajo"
+        },
+        {
+          "etapa": "adolescencia",
+          "score": 0.2442,
+          "severidad": "bajo"
+        },
+        {
+          "etapa": "adultez",
+          "score": 0.3629,
+          "severidad": "bajo"
+        }
+      ]
+    },
+    {
+      "clave": 8,
+      "nombre": "Chihuahua",
+      "irte_score": 0.2392,
+      "puntos": [
+        {
+          "etapa": "nacimiento",
+          "score": 0.1874,
+          "severidad": "bajo"
+        },
+        {
+          "etapa": "infancia",
+          "score": 0.1754,
+          "severidad": "bajo"
+        },
+        {
+          "etapa": "adolescencia",
+          "score": 0.2419,
+          "severidad": "bajo"
+        },
+        {
+          "etapa": "adultez",
+          "score": 0.3521,
+          "severidad": "bajo"
+        }
+      ]
+    },
+    {
+      "clave": 6,
+      "nombre": "Colima",
+      "irte_score": 0.2298,
+      "puntos": [
+        {
+          "etapa": "nacimiento",
+          "score": 0.1503,
+          "severidad": "bajo"
+        },
+        {
+          "etapa": "infancia",
+          "score": 0.18,
+          "severidad": "bajo"
+        },
+        {
+          "etapa": "adolescencia",
+          "score": 0.1901,
+          "severidad": "bajo"
+        },
+        {
+          "etapa": "adultez",
+          "score": 0.3986,
+          "severidad": "bajo"
+        }
+      ]
+    },
+    {
+      "clave": 22,
+      "nombre": "Querétaro",
+      "irte_score": 0.2048,
+      "puntos": [
+        {
+          "etapa": "nacimiento",
+          "score": 0.1591,
+          "severidad": "bajo"
+        },
+        {
+          "etapa": "infancia",
+          "score": 0.1565,
+          "severidad": "bajo"
+        },
+        {
+          "etapa": "adolescencia",
+          "score": 0.1924,
+          "severidad": "bajo"
+        },
+        {
+          "etapa": "adultez",
+          "score": 0.3113,
+          "severidad": "bajo"
+        }
+      ]
+    },
+    {
+      "clave": 26,
+      "nombre": "Sonora",
+      "irte_score": 0.1951,
+      "puntos": [
+        {
+          "etapa": "nacimiento",
+          "score": 0.1442,
+          "severidad": "bajo"
+        },
+        {
+          "etapa": "infancia",
+          "score": 0.1355,
+          "severidad": "bajo"
+        },
+        {
+          "etapa": "adolescencia",
+          "score": 0.1719,
+          "severidad": "bajo"
+        },
+        {
+          "etapa": "adultez",
+          "score": 0.3287,
+          "severidad": "bajo"
+        }
+      ]
+    },
+    {
+      "clave": 2,
+      "nombre": "Baja California",
+      "irte_score": 0.1871,
+      "puntos": [
+        {
+          "etapa": "nacimiento",
+          "score": 0.1244,
+          "severidad": "bajo"
+        },
+        {
+          "etapa": "infancia",
+          "score": 0.1159,
+          "severidad": "bajo"
+        },
+        {
+          "etapa": "adolescencia",
+          "score": 0.1976,
+          "severidad": "bajo"
+        },
+        {
+          "etapa": "adultez",
+          "score": 0.3105,
+          "severidad": "bajo"
+        }
+      ]
+    },
+    {
+      "clave": 3,
+      "nombre": "Baja California Sur",
+      "irte_score": 0.1639,
+      "puntos": [
+        {
+          "etapa": "nacimiento",
+          "score": 0.083,
+          "severidad": "bajo"
+        },
+        {
+          "etapa": "infancia",
+          "score": 0.0732,
+          "severidad": "bajo"
+        },
+        {
+          "etapa": "adolescencia",
+          "score": 0.1113,
+          "severidad": "medio"
+        },
+        {
+          "etapa": "adultez",
+          "score": 0.388,
+          "severidad": "bajo"
+        }
+      ]
+    },
+    {
+      "clave": 14,
+      "nombre": "Jalisco",
+      "irte_score": 0.1637,
+      "puntos": [
+        {
+          "etapa": "nacimiento",
+          "score": 0.1019,
+          "severidad": "bajo"
+        },
+        {
+          "etapa": "infancia",
+          "score": 0.1253,
+          "severidad": "bajo"
+        },
+        {
+          "etapa": "adolescencia",
+          "score": 0.1706,
+          "severidad": "bajo"
+        },
+        {
+          "etapa": "adultez",
+          "score": 0.2569,
+          "severidad": "bajo"
+        }
+      ]
+    },
+    {
+      "clave": 1,
+      "nombre": "Aguascalientes",
+      "irte_score": 0.1521,
+      "puntos": [
+        {
+          "etapa": "nacimiento",
+          "score": 0.1217,
+          "severidad": "bajo"
+        },
+        {
+          "etapa": "infancia",
+          "score": 0.1326,
+          "severidad": "bajo"
+        },
+        {
+          "etapa": "adolescencia",
+          "score": 0.1083,
+          "severidad": "bajo"
+        },
+        {
+          "etapa": "adultez",
+          "score": 0.2457,
+          "severidad": "bajo"
+        }
+      ]
+    },
+    {
+      "clave": 5,
+      "nombre": "Coahuila",
+      "irte_score": 0.1106,
+      "puntos": [
+        {
+          "etapa": "nacimiento",
+          "score": 0.0759,
+          "severidad": "bajo"
+        },
+        {
+          "etapa": "infancia",
+          "score": 0.091,
+          "severidad": "bajo"
+        },
+        {
+          "etapa": "adolescencia",
+          "score": 0.0904,
+          "severidad": "bajo"
+        },
+        {
+          "etapa": "adultez",
+          "score": 0.1852,
+          "severidad": "bajo"
+        }
+      ]
+    },
+    {
+      "clave": 9,
+      "nombre": "Ciudad de México",
+      "irte_score": 0.074,
+      "puntos": [
+        {
+          "etapa": "nacimiento",
+          "score": 0.0334,
+          "severidad": "bajo"
+        },
+        {
+          "etapa": "infancia",
+          "score": 0.1335,
+          "severidad": "bajo"
+        },
+        {
+          "etapa": "adolescencia",
+          "score": 0.0429,
+          "severidad": "bajo"
+        },
+        {
+          "etapa": "adultez",
+          "score": 0.0863,
+          "severidad": "bajo"
+        }
+      ]
+    },
+    {
+      "clave": 19,
+      "nombre": "Nuevo León",
+      "irte_score": 0.0002,
+      "puntos": [
+        {
+          "etapa": "nacimiento",
+          "score": 0.0008,
+          "severidad": "bajo"
+        },
+        {
+          "etapa": "infancia",
+          "score": 0.0,
+          "severidad": "bajo"
+        },
+        {
+          "etapa": "adolescencia",
+          "score": 0.0,
+          "severidad": "bajo"
+        },
+        {
+          "etapa": "adultez",
+          "score": 0.0,
+          "severidad": "bajo"
+        }
+      ]
+    }
+  ]
+}

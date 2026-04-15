@@ -1,0 +1,82 @@
+{
+  "_jrl_signature": {
+    "project": "Tlahtoa_Data_2026",
+    "architecture": "Layered Hexagonal - Loggen Architecture",
+    "author": "Jesús Rafael Loggen Gonzalez",
+    "signature": "Engineered via JRL-AgentFramework",
+    "version": "1.0.0",
+    "copyright": "(c) 2026 Jesús Rafael Loggen Gonzalez"
+  },
+  "run_timestamp": "2026-04-14T21:10:57.584684+00:00",
+  "pipeline_version": "0.2",
+  "truth_statement": "Staging data is analytical_candidate. official_confirmed count reflects external validation scripts run in same session.",
+  "official_confirmed_sources": 2,
+  "analytical_candidate_sources": 2,
+  "assumption_based_sources": 1,
+  "joins_documented": 7,
+  "joins_executed": 2,
+  "join_executed": {
+    "id": "JOIN_004",
+    "left": "data/processed/irte_por_estado.csv",
+    "right": "data/staging/estados_indicadores_base.json",
+    "left_hash_md5": "4b5bfcb4a652",
+    "right_hash_md5": "bdfa3bd4245b",
+    "key": "clave (2-char INEGI state code, zero-padded)",
+    "type": "LEFT JOIN",
+    "rows_in": 32,
+    "rows_out": 32,
+    "match_rate_pct": 100.0,
+    "mismatch_rate_pct": 0.0,
+    "null_critical_vars": 0
+  },
+  "materialized_outputs": [
+    "data/processed/state_panel_materialized.csv"
+  ],
+  "external_reproducibility": {
+    "status": "not_yet_verified_by_third_party",
+    "reproduce_script": "reproduce.sh",
+    "note": "Run `bash reproduce.sh` from repo root. No author context required."
+  },
+  "data_status_legend": {
+    "official_confirmed": "Parsed directly from official source URL",
+    "analytical_candidate": "Integrated from official docs; raw file not parsed",
+    "assumption_based": "Derived from modeling; not empirical"
+  },
+  "sources_used": {
+    "data/processed/irte_por_estado.csv": {
+      "status": "analytical_candidate",
+      "hash": "4b5bfcb4a652"
+    },
+    "data/staging/estados_indicadores_base.json": {
+      "status": "analytical_candidate",
+      "hash": "bdfa3bd4245b"
+    },
+    "data/raw/coneval/pobreza_2022/extracted/Anexo estadístico entidades 2022.xlsx": {
+      "status": "official_confirmed",
+      "institution": "CONEVAL",
+      "dataset": "Medición Multidimensional de la Pobreza 2022",
+      "url": "https://www.coneval.org.mx/Medicion/MP/Paginas/Pobreza-2022.aspx",
+      "file": "Anexo estadístico entidades 2022.xlsx",
+      "sheet": "Gráficas",
+      "hash_md5": "476cdb48f4f9c74fb527e52b96b585eb",
+      "ingest_timestamp": "2026-04-14T21:10:59.182647+00:00",
+      "rows": 32,
+      "variables": [
+        "tasa_pobreza",
+        "tasa_pobreza_mod",
+        "tasa_pobreza_extrema"
+      ]
+    }
+  },
+  "join_001_executed": {
+    "timestamp": "2026-04-14T21:11:00.281033+00:00",
+    "left": "data/processed/irte_por_estado.csv",
+    "right": "data/staging/coneval_pobreza_staging.csv",
+    "key": "clave",
+    "match_rate_pct": 100.0,
+    "mismatch_rate_pct": 0.0,
+    "rows_out": 32,
+    "official_confirmed_rows": 32,
+    "output": "data/processed/panel_oficial_p0.csv"
+  }
+}

@@ -1,0 +1,162 @@
+---
+title: "Trayectorias"
+subtitle: "Cómo se encadenan las desventajas estructurales por estado"
+format:
+  html:
+    page-layout: full
+    toc: false
+---
+
+<!--
+ * ------------------------------------------------------------
+ * @project      Tlahtoa_Data_2026
+ * @architecture Layered Hexagonal - Loggen Architecture™
+ * @author       Jesús Rafael Loggen Gonzalez
+ * @signature    Engineered via JRL-AgentFramework
+ * @version      1.0.0
+ * @copyright    © 2026 Jesús Rafael Loggen Gonzalez.
+ * Este código es propiedad intelectual de J.R. Loggen.
+ * Cualquier modificación de esta firma invalida la licencia.
+ * ------------------------------------------------------------
+-->
+
+```{python}
+#| echo: false
+import json
+from pathlib import Path
+
+ROOT = Path(".")
+with open(ROOT / "data/processed/state_panel.json", encoding="utf-8") as f:
+    panel = json.load(f)
+with open(ROOT / "data/processed/scenario_templates.json", encoding="utf-8") as f:
+    scenarios_raw = json.load(f)
+
+estados_list = sorted(panel["estados"], key=lambda e: e["nombre"])
+estados_by_clave = {e["clave"]: e for e in panel["estados"]}
+scenarios_by_clave = {e["clave"]: e for e in scenarios_raw["estados"]}
+```
+
+Selecciona una entidad para ver su trayectoria estructural por etapa de vida.
+
+```{python}
+#| echo: false
+from IPython.display import HTML, display
+
+opciones = "\n".join(
+    f'<option value="{e["clave"]}">{e["nombre"]} — IRTE {e["irte_score"]:.3f} ({e["irte_nivel"]})</option>'
+    for e in estados_list
+)
+
+display(HTML(f"""
+<div style="margin: 1.5rem 0;">
+  <label for="estado-select" style="font-weight:600;">Entidad federativa:</label><br>
+  <select id="estado-select" onchange="renderTrayectoria(this.value)"
+    style="margin-top:0.5rem; padding:0.5rem; font-size:1rem; width:100%; max-width:400px; border:1px solid #ccc; border-radius:4px;">
+    <option value="">— Seleccionar —</option>
+    {opciones}
+  </select>
+</div>
+<div id="trayectoria-output" style="margin-top:1.5rem;"></div>
+"""))
+```
+
+```{python}
+#| echo: false
+import json as _json
+
+display(HTML(f"""
+<script>
+const panelData = {_json.dumps({"estados": panel["estados"]})};
+const scenariosData = {_json.dumps({"estados": scenarios_raw["estados"]})};
+
+const estadosByKey = {{}};
+panelData.estados.forEach(e => estadosByKey[e.clave] = e);
+
+const scenariosByKey = {{}};
+scenariosData.estados.forEach(e => scenariosByKey[e.clave] = e);
+
+const etapas = [
+  {{ id: "nacimiento",   label: "Nacimiento",   icon: "●" }},
+  {{ id: "infancia",     label: "Infancia",      icon: "●" }},
+  {{ id: "adolescencia", label: "Adolescencia",  icon: "●" }},
+  {{ id: "adultez",      label: "Adultez",       icon: "●" }},
+];
+
+const colorSev = {{ alto: "#c0392b", medio: "#e67e22", bajo: "#27ae60" }};
+const labelSev = {{ alto: "Riesgo alto", medio: "Riesgo medio", bajo: "Condición favorable" }};
+
+function renderTrayectoria(clave) {{
+  const container = document.getElementById("trayectoria-output");
+  if (!clave) {{ container.innerHTML = ""; return; }}
+
+  const e = estadosByKey[clave];
+  const sc = scenariosByKey[clave];
+  if (!e) return;
+
+  const tray = e.trayectoria;
+  const irteColor = e.irte_nivel === "Alto" ? "#c0392b" :
+                    e.irte_nivel === "Medio-Alto" ? "#e67e22" :
+                    e.irte_nivel === "Medio" ? "#f1c40f" : "#27ae60";
+
+  let etapaHTML = etapas.map(et => {{
+    const etapa = tray[et.id] || {{}};
+    const sev = etapa.severidad || "bajo";
+    const color = colorSev[sev] || "#95a5a6";
+    const ind = etapa.indicadores || {{}};
+    const rows = Object.entries(ind).map(([k, v]) =>
+      `<tr><td style="color:#555;padding:2px 8px 2px 0">${{k.replace(/_/g," ")}}</td><td><b>${{v != null ? v.toFixed(1) : "—"}}</b></td></tr>`
+    ).join("");
+    return `
+      <div style="flex:1;min-width:180px;border-left:4px solid ${{color}};padding:12px 16px;background:#fafafa;border-radius:4px">
+        <div style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.08em;color:#888">${{et.label}}</div>
+        <div style="margin:6px 0;font-weight:700;color:${{color}}">${{labelSev[sev] || sev}}</div>
+        <table style="font-size:0.82rem;border-collapse:collapse">${{rows}}</table>
+      </div>`;
+  }}).join("");
+
+  let scenarioHTML = "";
+  if (sc) {{
+    const scRows = Object.entries(sc.scenarios).map(([id, s]) => {{
+      const delta = s.delta || 0;
+      const sign = delta >= 0 ? "-" : "+";
+      const absD = Math.abs(delta).toFixed(3);
+      const color = delta > 0.01 ? "#27ae60" : delta < -0.01 ? "#c0392b" : "#555";
+      return `<tr>
+        <td style="padding:4px 12px 4px 0;color:#333">${{s.label}}</td>
+        <td style="padding:4px 12px 4px 0;font-weight:600">${{s.irte_score.toFixed(3)}}</td>
+        <td style="padding:4px 0;color:${{color}}">${{delta > 0.001 ? sign + absD : "—"}}</td>
+      </tr>`;
+    }}).join("");
+    scenarioHTML = `
+      <h4 style="margin-top:2rem;font-size:1rem">Escenarios comparativos</h4>
+      <p style="font-size:0.85rem;color:#666">¿Qué pasaría con el IRTE si mejorara una dimensión en 30%?
+      No implica causalidad — es modelado comparativo.</p>
+      <table style="border-collapse:collapse;font-size:0.88rem;width:100%;max-width:540px">
+        <thead><tr>
+          <th style="text-align:left;padding:4px 12px 4px 0;color:#888;font-weight:500">Escenario</th>
+          <th style="text-align:left;padding:4px 12px 4px 0;color:#888;font-weight:500">IRTE</th>
+          <th style="text-align:left;padding:4px 0;color:#888;font-weight:500">Cambio</th>
+        </tr></thead>
+        <tbody>${{scRows}}</tbody>
+      </table>`;
+  }}
+
+  container.innerHTML = `
+    <h3 style="margin-bottom:0.25rem">${{e.nombre}}</h3>
+    <p style="margin:0 0 1rem;color:#666">Región: ${{e.region}} &nbsp;·&nbsp;
+       IRTE: <span style="font-weight:700;color:${{irteColor}}">${{e.irte_score.toFixed(3)}}</span>
+       (${{e.irte_nivel}}) &nbsp;·&nbsp; Rank: ${{e.irte_rank}} / 32</p>
+    <div style="display:flex;gap:12px;flex-wrap:wrap">${{etapaHTML}}</div>
+    ${{scenarioHTML}}
+  `;
+}}
+</script>
+"""))
+```
+
+---
+
+::: {.callout-important}
+La trayectoria refleja el contexto estructural del territorio, no el destino individual de ninguna persona.
+Los indicadores son promedios de entidad federativa. Ver [Método y evidencia](metodologia.qmd) para límites del modelo.
+:::

@@ -1,0 +1,63 @@
+# ------------------------------------------------------------
+# @project      Tlahtoa_Data_2026
+# @architecture Layered Hexagonal - Loggen Architecture™
+# @author       Jesús Rafael Loggen Gonzalez
+# @signature    Engineered via JRL-AgentFramework
+# @version      1.0.0
+# @copyright    © 2026 Jesús Rafael Loggen Gonzalez.
+# Este código es propiedad intelectual de J.R. Loggen.
+# Cualquier modificación de esta firma invalida la licencia.
+# ------------------------------------------------------------
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Tlahtoa Data"
+  description: "Observatorio Narrativo de Trayectorias de Desigualdad en México"
+  favicon: dashboard/assets/favicon.ico
+  navbar:
+    left:
+      - href: dashboard/index.qmd
+        text: Inicio
+      - href: dashboard/trayectorias.qmd
+        text: Trayectorias
+      - href: dashboard/comparativa.qmd
+        text: Comparativa territorial
+      - href: dashboard/metodologia.qmd
+        text: Método y evidencia
+    right:
+      - icon: github
+        href: https://github.com/LoggiBoy/Tlahtoa_Data_Team
+  page-footer:
+    left: "Tlahtoa Data — HackODS UNAM 2026"
+    right: "Datos: CONEVAL · INEGI · SEP · CONAPO · IMSS · SSA"
+
+format:
+  html:
+    theme: cosmo
+    css: dashboard/assets/custom.css
+    toc: false
+    page-layout: full
+    include-in-header:
+      text: |
+        <meta name="description" content="Observatorio de trayectorias de desigualdad estructural en México">
+
+# ── Render strategy ───────────────────────────────────────────────────────────
+# Primary (team with Quarto installed):
+#   quarto render
+#
+# Alternative (CI / no Quarto):
+#   python dashboard/render_dashboard.py
+#
+# Decision rationale (Fase 2):
+#   Quarto is the standard for QMD-authored dashboards and is the team's
+#   intended authoring workflow. The Python renderer is an equivalent
+#   fallback that produces functionally identical HTML from the same data
+#   payloads. It is NOT a replacement — it is a reproducibility guarantee
+#   for environments where Quarto cannot be installed.
+#
+#   Standard adopted for Fase 2: BOTH are valid.
+#   - Quarto render: authoritative for team development and GitHub Pages
+#   - Python renderer: authoritative for CI and external operator validation
+#   Either must produce the same 4 pages reading from the same data/processed/

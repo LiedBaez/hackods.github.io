@@ -1,0 +1,33 @@
+clave,nombre,region,tasa_pobreza,tasa_pobreza_extrema,rezago_educativo,data_status,acceso_agua,acceso_electricidad,acceso_drenaje,join_status,join_id,join_key,services_deficit_avg,high_poverty_high_deficit
+07,Chiapas,Sur,75.5,28.1,45.3,analytical_candidate,43.2,8.4,38.6,matched,JOIN_002,clave,30.07,True
+20,Oaxaca,Sur,67.8,24.8,40.2,analytical_candidate,38.4,6.8,33.8,matched,JOIN_002,clave,26.33,True
+12,Guerrero,Sur,66.4,23.4,38.7,analytical_candidate,36.8,6.2,31.4,matched,JOIN_002,clave,24.8,True
+30,Veracruz,Sureste,57.4,14.8,33.4,analytical_candidate,25.4,4.4,20.4,matched,JOIN_002,clave,16.73,True
+27,Tabasco,Sureste,54.8,12.8,30.4,analytical_candidate,22.4,3.4,18.4,matched,JOIN_002,clave,14.73,True
+21,Puebla,Centro,52.8,12.4,31.4,analytical_candidate,21.4,3.8,17.4,matched,JOIN_002,clave,14.2,True
+04,Campeche,Sureste,49.8,11.3,27.4,analytical_candidate,18.4,3.2,14.7,matched,JOIN_002,clave,12.1,True
+16,Michoacán,Occidente,49.2,10.4,31.8,analytical_candidate,18.9,3.4,14.8,matched,JOIN_002,clave,12.37,True
+29,Tlaxcala,Centro,48.8,9.4,24.8,analytical_candidate,13.4,1.8,9.8,matched,JOIN_002,clave,8.33,True
+13,Hidalgo,Centro,45.3,9.8,29.7,analytical_candidate,16.3,2.1,13.4,matched,JOIN_002,clave,10.6,True
+17,Morelos,Centro,44.8,7.3,23.4,analytical_candidate,11.3,1.7,8.4,matched,JOIN_002,clave,7.13,True
+24,San Luis Potosí,Centro-Norte,44.4,8.8,26.8,analytical_candidate,16.8,2.8,13.4,matched,JOIN_002,clave,11.0,True
+15,Estado de México,Centro,42.7,5.1,21.4,analytical_candidate,8.7,1.3,6.4,matched,JOIN_002,clave,5.47,False
+32,Zacatecas,Centro-Norte,41.4,7.4,25.8,analytical_candidate,16.4,2.8,12.8,matched,JOIN_002,clave,10.67,True
+31,Yucatán,Sureste,40.8,7.8,27.4,analytical_candidate,14.8,2.4,11.4,matched,JOIN_002,clave,9.53,True
+11,Guanajuato,Centro,37.8,5.8,28.4,analytical_candidate,5.8,1.4,5.2,matched,JOIN_002,clave,4.13,False
+18,Nayarit,Occidente,36.4,6.1,22.8,analytical_candidate,15.4,2.4,11.8,matched,JOIN_002,clave,9.87,False
+10,Durango,Norte,36.1,5.4,22.1,analytical_candidate,14.2,2.8,11.3,matched,JOIN_002,clave,9.43,False
+23,Quintana Roo,Sureste,31.8,4.8,19.4,analytical_candidate,9.4,2.1,7.4,matched,JOIN_002,clave,6.3,False
+25,Sinaloa,Noroeste,30.8,4.1,19.8,analytical_candidate,9.8,2.1,7.8,matched,JOIN_002,clave,6.57,False
+06,Colima,Occidente,30.2,3.1,16.8,analytical_candidate,5.4,1.2,4.1,matched,JOIN_002,clave,3.57,False
+28,Tamaulipas,Norte,29.4,3.4,18.8,analytical_candidate,7.8,1.6,5.8,matched,JOIN_002,clave,5.07,False
+08,Chihuahua,Norte,28.4,3.8,17.2,analytical_candidate,8.3,1.8,5.1,matched,JOIN_002,clave,5.07,False
+09,Ciudad de México,Centro,27.6,1.7,12.3,analytical_candidate,4.1,0.4,1.2,matched,JOIN_002,clave,1.9,False
+22,Querétaro,Centro,27.4,3.2,18.4,analytical_candidate,6.4,1.2,4.8,matched,JOIN_002,clave,4.13,False
+01,Aguascalientes,Centro-Norte,26.4,2.3,14.1,analytical_candidate,3.1,0.8,2.4,matched,JOIN_002,clave,2.1,False
+26,Sonora,Noroeste,25.8,2.8,15.4,analytical_candidate,7.4,1.4,5.4,matched,JOIN_002,clave,4.73,False
+14,Jalisco,Occidente,25.4,2.4,17.8,analytical_candidate,4.3,1.0,3.4,matched,JOIN_002,clave,2.9,False
+02,Baja California,Noroeste,24.9,2.1,16.3,analytical_candidate,5.2,1.1,3.8,matched,JOIN_002,clave,3.37,False
+05,Coahuila,Norte,22.5,1.9,13.8,analytical_candidate,2.8,0.7,2.1,matched,JOIN_002,clave,1.87,False
+03,Baja California Sur,Noroeste,20.7,1.8,12.9,analytical_candidate,7.1,1.4,4.2,matched,JOIN_002,clave,4.23,False
+19,Nuevo León,Norte,14.2,0.9,10.8,analytical_candidate,1.8,0.4,1.4,matched,JOIN_002,clave,1.2,False

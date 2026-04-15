@@ -1,0 +1,156 @@
+---
+title: "Comparativa territorial"
+subtitle: "Brechas estructurales entre entidades federativas"
+format:
+  html:
+    page-layout: full
+    toc: false
+---
+
+<!--
+ * ------------------------------------------------------------
+ * @project      Tlahtoa_Data_2026
+ * @architecture Layered Hexagonal - Loggen Architecture™
+ * @author       Jesús Rafael Loggen Gonzalez
+ * @signature    Engineered via JRL-AgentFramework
+ * @version      1.0.0
+ * @copyright    © 2026 Jesús Rafael Loggen Gonzalez.
+ * Este código es propiedad intelectual de J.R. Loggen.
+ * Cualquier modificación de esta firma invalida la licencia.
+ * ------------------------------------------------------------
+-->
+
+```{python}
+#| echo: false
+import json, plotly.graph_objects as go, plotly.express as px
+from pathlib import Path
+
+ROOT = Path(".")
+with open(ROOT / "data/processed/comparison_payload.json", encoding="utf-8") as f:
+    comp = json.load(f)
+
+estados = comp["estados"]  # ya ordenados por irte_score desc
+nacional = comp["nacional_irte"]
+```
+
+El IRTE promedio nacional es **`{python} round(comp['nacional_irte'], 3)`**.
+Los estados por encima de ese valor concentran mayor riesgo estructural acumulado.
+
+---
+
+### Ranking de riesgo estructural
+
+```{python}
+#| echo: false
+nombres = [e["nombre"] for e in reversed(estados)]
+scores  = [e["irte_score"] for e in reversed(estados)]
+niveles = [e["irte_nivel"] for e in reversed(estados)]
+deltas  = [e["delta_vs_nacional"] for e in reversed(estados)]
+
+color_map = {"Alto": "#c0392b", "Medio-Alto": "#e67e22", "Medio": "#f1c40f", "Bajo": "#27ae60"}
+colores = [color_map.get(n, "#aaa") for n in niveles]
+
+fig = go.Figure()
+
+fig.add_trace(go.Bar(
+    x=scores, y=nombres, orientation="h",
+    marker_color=colores,
+    hovertemplate="<b>%{y}</b><br>IRTE: %{x:.3f}<extra></extra>",
+    name="IRTE",
+))
+
+fig.add_vline(
+    x=nacional, line_dash="dot", line_color="#2c3e50",
+    annotation_text=f"Nacional: {nacional:.3f}",
+    annotation_position="top right",
+    annotation_font_size=11,
+)
+
+fig.update_layout(
+    height=720,
+    margin=dict(l=155, r=40, t=20, b=40),
+    xaxis=dict(title="IRTE (0 = menor riesgo · 1 = mayor riesgo)", range=[0, 1.05]),
+    yaxis_title=None,
+    showlegend=False,
+    plot_bgcolor="white", paper_bgcolor="white",
+    font=dict(family="Georgia, serif", size=11),
+)
+fig.show()
+```
+
+---
+
+### Brecha respecto al promedio nacional
+
+```{python}
+#| echo: false
+fig2 = go.Figure(go.Bar(
+    x=deltas,
+    y=nombres,
+    orientation="h",
+    marker_color=["#c0392b" if d > 0 else "#27ae60" for d in deltas],
+    hovertemplate="<b>%{y}</b><br>Delta vs nacional: %{x:+.3f}<extra></extra>",
+))
+
+fig2.add_vline(x=0, line_color="#2c3e50", line_width=1.5)
+
+fig2.update_layout(
+    height=720,
+    margin=dict(l=155, r=40, t=20, b=40),
+    xaxis_title="Diferencia respecto al IRTE nacional (positivo = mayor riesgo)",
+    yaxis_title=None,
+    showlegend=False,
+    plot_bgcolor="white", paper_bgcolor="white",
+    font=dict(family="Georgia, serif", size=11),
+)
+fig2.show()
+```
+
+---
+
+### Descomposición por dimensión
+
+```{python}
+#| echo: false
+with open(ROOT / "data/processed/state_panel.json", encoding="utf-8") as f:
+    panel = json.load(f)
+
+panel_estados = sorted(panel["estados"], key=lambda e: e["irte_score"], reverse=True)
+nombres_panel = [e["nombre"] for e in panel_estados]
+dims = ["salud", "pobreza", "educacion", "genero_empleo"]
+dim_labels = {"salud": "Salud y servicios", "pobreza": "Pobreza estructural",
+              "educacion": "Educación", "genero_empleo": "Género y empleo"}
+dim_colors = {"salud": "#2980b9", "pobreza": "#c0392b",
+              "educacion": "#8e44ad", "genero_empleo": "#16a085"}
+
+fig3 = go.Figure()
+for dim in dims:
+    valores = [e["dimensiones"].get(dim, 0) for e in panel_estados]
+    fig3.add_trace(go.Bar(
+        name=dim_labels[dim],
+        x=nombres_panel,
+        y=valores,
+        marker_color=dim_colors[dim],
+        hovertemplate=f"<b>%{{x}}</b><br>{dim_labels[dim]}: %{{y:.3f}}<extra></extra>",
+    ))
+
+fig3.update_layout(
+    barmode="stack",
+    height=440,
+    margin=dict(l=40, r=40, t=20, b=120),
+    xaxis=dict(tickangle=-45, tickfont=dict(size=10)),
+    yaxis_title="Score por dimensión",
+    legend=dict(orientation="h", y=1.05, x=0),
+    plot_bgcolor="white", paper_bgcolor="white",
+    font=dict(family="Georgia, serif", size=11),
+)
+fig3.show()
+```
+
+---
+
+::: {.callout-note}
+La comparativa muestra posición relativa entre los 32 estados.
+Un IRTE alto indica mayor riesgo **comparado con el resto del país**.
+Ver fuentes y metodología en [Método y evidencia](metodologia.qmd).
+:::
