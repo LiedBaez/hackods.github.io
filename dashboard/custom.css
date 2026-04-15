@@ -1,0 +1,1360 @@
+/* ═══════════════════════════════════════════════════
+   Lotería de la Vida — Tlahtoa Data
+   Hack ODS UNAM 2026
+   ═══════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Work+Sans:wght@400;600;700&display=swap');
+
+:root {
+  --crema: #EBE4D1;
+  --terracota: #B8432A;
+  --verde: #367A4F;
+  --negro: #141414;
+  --dorado: #E8C547;
+  --azul-luna: #4A6FA5;
+
+  --fuente-titulo: 'Abril Fatface', serif;
+  --fuente-cuerpo: 'Work Sans', sans-serif;
+
+  --sombra-offset: 4px 4px 0 var(--negro);
+  --borde-grueso: 2px solid var(--negro);
+  --radio-boton: 50px;
+}
+
+/* ── Base ─────────────────────────────────────────── */
+
+html { scroll-behavior: smooth; }
+
+body {
+  background-color: var(--crema) !important;
+  background-image:
+    /* Capa 1 — sombras grandes de arrugas (baja frecuencia, escala grande) */
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='800'%3E%3Cfilter id='c'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.009' numOctaves='3' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='800' height='800' filter='url(%23c)' opacity='0.07'/%3E%3C/svg%3E"),
+    /* Capa 2 — pliegues medianos */
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.04' numOctaves='2' seed='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23m)' opacity='0.05'/%3E%3C/svg%3E"),
+    /* Capa 3 — grano fino de fibras de papel */
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23g)' opacity='0.04'/%3E%3C/svg%3E");
+  background-size: 800px 800px, 400px 400px, 200px 200px;
+  background-blend-mode: multiply, multiply, multiply;
+  font-family: var(--fuente-cuerpo) !important;
+  color: var(--negro) !important;
+  min-height: 100vh;
+}
+
+#title-block-header { display: none; }
+
+main.content,
+#quarto-document-content,
+.quarto-container,
+#quarto-content {
+  max-width: 100% !important;
+  padding: 0 !important;
+  grid-column: screen-start / screen-end !important;
+}
+
+.page-layout-full .content { max-width: 100% !important; }
+
+/* Forzar cells de Quarto y mount points OJS a ancho completo */
+.cell,
+.cell-output,
+.cell-output-display,
+#ojs-cell-3,
+[id^="ojs-cell-"] {
+  width: 100% !important;
+  max-width: 100% !important;
+  padding: 0 !important;
+  grid-column: screen-start / screen-end !important;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--fuente-titulo);
+  color: var(--terracota);
+}
+
+/* ── Borde decorativo Lotería ────────────────────── */
+
+.borde-loteria {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('assets/fondo.png');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  mix-blend-mode: multiply;
+  opacity: 0.80;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Navbar removido ─────────────────────────────── */
+
+.navbar, .quarto-secondary-nav, header.quarto-title-block { display: none !important; }
+
+/* ── Footer ──────────────────────────────────────── */
+
+.footer-loteria {
+  background: var(--terracota);
+  border-top: 3px solid var(--negro);
+  padding: 1.5rem 2rem;
+  margin-top: 4rem;
+  position: relative;
+  z-index: 10;
+}
+
+.footer-contenido {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.footer-marca {
+  font-family: var(--fuente-titulo);
+  font-size: 1.2rem;
+  color: var(--crema);
+  letter-spacing: 0.05em;
+}
+
+.footer-nav {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.footer-nav a {
+  color: var(--crema);
+  text-decoration: none;
+  font-family: var(--fuente-cuerpo);
+  font-weight: 600;
+  font-size: 0.9rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: opacity 0.2s;
+}
+
+.footer-nav a:hover {
+  opacity: 0.75;
+  text-decoration: underline;
+}
+
+.footer-credito {
+  font-family: var(--fuente-cuerpo);
+  font-size: 0.8rem;
+  color: rgba(235, 228, 209, 0.7);
+}
+
+/* ── Game container ──────────────────────────────── */
+
+.juego-container {
+  width: 100%;
+  margin: 0 auto;
+  padding: 5rem 0 0 0;
+  position: relative;
+  z-index: 1;
+}
+
+.pantalla { animation: cartaEntrar 0.45s ease-out; position: relative; z-index: 1; }
+
+/* ── Pantalla de inicio — DESKTOP dos columnas ───── */
+
+.pantalla-seleccion {
+  min-height: 90vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 3rem;
+  padding: 4rem 10%;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Columna izquierda — título y subtítulo */
+.intro-bloque {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  justify-content: center;
+}
+
+.titulo-hero {
+  font-family: var(--fuente-titulo);
+  font-size: clamp(4rem, 7vw, 7rem);
+  color: var(--terracota);
+  text-align: left;
+  line-height: 0.92;
+  letter-spacing: 0.02em;
+  margin: 0;
+  text-shadow: 3px 3px 0 rgba(0,0,0,0.12);
+}
+
+.estrella-deco, .titulo-estrella {
+  color: var(--verde);
+  font-size: 0.5em;
+  margin: 0 0.3em;
+  vertical-align: middle;
+}
+
+.intro-texto {
+  text-align: left;
+  font-size: clamp(0.95rem, 1.2vw, 1.1rem);
+  max-width: 480px;
+  line-height: 1.6;
+  color: var(--negro);
+  margin: 0;
+}
+
+.irte-explicacion {
+  background: rgba(184, 67, 42, 0.06);
+  border-left: 3px solid var(--terracota);
+  padding: 1rem 1.25rem;
+  border-radius: 0 8px 8px 0;
+  max-width: 480px;
+}
+
+.intro-cta {
+  font-family: var(--fuente-titulo);
+  font-size: 1.2rem;
+  color: var(--terracota);
+  margin-top: 0.75rem;
+  margin-bottom: 0;
+}
+
+/* Columna derecha — controles */
+.controles-bloque {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: stretch;
+}
+
+/* ── Selección — sin contenedor blanco ───────────── */
+
+.campo {
+  margin: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.campo label {
+  display: block;
+  font-family: var(--fuente-cuerpo);
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--negro);
+  margin-bottom: 0.75rem;
+  text-align: left;
+}
+
+/* Dropdown estado */
+.select-estado, #select-estado {
+  font-family: var(--fuente-cuerpo);
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: var(--crema);
+  border: var(--borde-grueso);
+  box-shadow: var(--sombra-offset);
+  padding: 0.75rem 2.5rem 0.75rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+  color: var(--negro);
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M0 0l6 8 6-8z' fill='%23141414'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+}
+
+/* Botones de género — ocupan todo el ancho disponible */
+.genero-btns {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+}
+
+.genero-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  background: var(--crema);
+  border: var(--borde-grueso);
+  box-shadow: var(--sombra-offset);
+  padding: 1.5rem 1rem;
+  border-radius: 12px;
+  cursor: pointer;
+  font-family: var(--fuente-cuerpo);
+  font-weight: 700;
+  font-size: 1.1rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--negro);
+  transition: transform 0.1s, box-shadow 0.1s, background-color 0.15s;
+}
+
+.genero-btn img {
+  width: 90px;
+  height: 90px;
+  object-fit: contain;
+}
+
+.genero-btn:hover {
+  background: var(--crema);
+  color: var(--negro);
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--negro);
+}
+
+.genero-btn.activo {
+  background: var(--dorado);
+  color: var(--negro);
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 var(--negro);
+}
+
+.nota-brecha {
+  display: block;
+  margin-top: 1rem;
+  font-size: 0.78rem;
+  font-style: italic;
+  color: rgba(20, 20, 20, 0.65);
+  line-height: 1.5;
+  text-align: center;
+}
+
+/* Botón principal Jugar mi vida */
+.btn-jugar, .btn-hero {
+  background: var(--verde);
+  color: var(--crema);
+  border: var(--borde-grueso);
+  box-shadow: var(--sombra-offset);
+  padding: 1rem 3rem;
+  border-radius: var(--radio-boton);
+  font-family: var(--fuente-cuerpo);
+  font-weight: 700;
+  font-size: 1.2rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 0.1s, box-shadow 0.1s;
+  display: block;
+  width: 100%;
+  margin: 0;
+}
+
+.btn-jugar:hover:not(:disabled), .btn-hero:hover:not(:disabled) {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--negro);
+}
+
+.btn-jugar:active:not(:disabled), .btn-hero:active:not(:disabled) {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 var(--negro);
+}
+
+.btn-jugar:disabled, .btn-hero:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: var(--sombra-offset);
+}
+
+/* ── Indicador de progreso ───────────────────────── */
+
+.juego-progress {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  margin-bottom: 2rem;
+}
+
+.progress-step {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: var(--borde-grueso);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--fuente-cuerpo);
+  font-weight: 700;
+  font-size: 0.9rem;
+  background: var(--crema);
+  color: var(--negro);
+  box-shadow: 2px 2px 0 var(--negro);
+  flex-shrink: 0;
+}
+
+.progress-step.activa { background: var(--terracota); color: var(--crema); }
+.progress-step.completada { background: var(--verde); color: var(--crema); }
+.progress-step.bloqueada { background: rgba(0,0,0,0.1); color: var(--negro); opacity: 0.5; box-shadow: none; border-style: dashed; font-size: 0.75rem; }
+
+.progress-conector { width: 32px; height: 2px; background: var(--negro); flex-shrink: 0; }
+.progress-conector.bloqueada { background: none; border-top: 2px dashed rgba(20,20,20,0.4); height: 0; }
+
+/* ── Cartas del juego ────────────────────────────── */
+
+.carta, .carta-etapa {
+  background: var(--crema);
+  border: 3px solid var(--negro);
+  box-shadow: var(--sombra-offset);
+  border-radius: 12px;
+  padding: 2rem;
+  max-width: 540px;
+  margin: 0 auto 1.5rem;
+  animation: cartaEntrar 0.4s ease-out;
+  position: relative;
+  outline: 1px solid var(--dorado);
+  outline-offset: -8px;
+}
+
+/* Esquinas decorativas tipo Lotería */
+.carta-etapa::before,
+.carta-etapa::after {
+  content: '✦';
+  position: absolute;
+  color: var(--terracota);
+  font-size: 1rem;
+  opacity: 0.6;
+}
+
+.carta-etapa::before { top: 0.5rem; left: 0.75rem; }
+.carta-etapa::after { top: 0.5rem; right: 0.75rem; }
+
+@keyframes cartaEntrar {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.carta-enter { animation: cartaEntrar 0.45s ease-out; }
+
+.carta-imagen {
+  width: 100%;
+  max-width: 320px;
+  height: 240px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto 1.25rem;
+  filter: drop-shadow(3px 3px 0 rgba(20, 20, 20, 0.15));
+}
+
+@media (max-width: 640px) {
+  .carta-imagen { max-width: 240px; height: 180px; }
+}
+
+.carta-emoji { font-size: 3rem; line-height: 1; }
+
+.carta-titulo {
+  font-family: var(--fuente-titulo);
+  font-size: 1.8rem;
+  color: var(--terracota);
+  text-align: center;
+  margin: 0 0 0.5rem 0;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid var(--terracota);
+  letter-spacing: 0.02em;
+}
+
+.carta-ods { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+
+.carta-body { margin-bottom: 1.5rem; }
+
+.carta-narrativa {
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--negro);
+  line-height: 1.6;
+  margin: 1rem 0;
+  padding: 0.75rem;
+  background: rgba(0,0,0,0.04);
+  border-radius: 6px;
+}
+
+.carta-narrativa strong { color: var(--terracota); }
+
+.carta-footer { margin-top: 1.5rem; }
+
+/* ── ODS badges ──────────────────────────────────── */
+
+.badge-ods {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  font-family: var(--fuente-cuerpo);
+  font-weight: 700;
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  border-radius: 4px;
+  border: 1px solid;
+}
+
+.badge-ods1 { background: hsl(356, 72%, 93%); color: hsl(356, 72%, 28%); border-color: hsl(356, 72%, 75%); }
+.badge-ods3 { background: hsl(110, 50%, 92%); color: hsl(110, 50%, 22%); border-color: hsl(110, 50%, 70%); }
+.badge-ods4 { background: hsl(350, 72%, 92%); color: hsl(350, 72%, 25%); border-color: hsl(350, 72%, 72%); }
+.badge-ods5 { background: hsl(14, 72%, 93%); color: hsl(14, 72%, 28%); border-color: hsl(14, 72%, 72%); }
+.badge-ods6 { background: hsl(196, 72%, 92%); color: hsl(196, 72%, 22%); border-color: hsl(196, 72%, 68%); }
+.badge-ods8 { background: hsl(340, 60%, 93%); color: hsl(340, 60%, 25%); border-color: hsl(340, 60%, 72%); }
+.badge-ods10 { background: hsl(330, 60%, 93%); color: hsl(330, 60%, 25%); border-color: hsl(330, 60%, 72%); }
+.badge-ods16 { background: hsl(220, 60%, 93%); color: hsl(220, 60%, 25%); border-color: hsl(220, 60%, 72%); }
+
+/* ── Barras comparativas ─────────────────────────── */
+
+.barra-comparativa { margin: 1rem 0; }
+
+.barra-fila {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.barra-label {
+  font-family: var(--fuente-cuerpo);
+  font-weight: 700;
+  font-size: 0.78rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  min-width: 100px;
+  text-align: right;
+}
+
+.barra-track {
+  flex: 1;
+  height: 14px;
+  background: rgba(0,0,0,0.08);
+  border: 1.5px solid var(--negro);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.barra-fill {
+  height: 100%;
+  background: var(--terracota);
+  transition: width 0.6s ease-out;
+}
+
+.barra-fill.barra-mala { background: var(--terracota); }
+.barra-fill.barra-buena { background: var(--verde); }
+.barra-fill.barra-nacional, .barra-fill.nacional { background: var(--azul-luna); }
+
+.barra-valor {
+  font-family: var(--fuente-cuerpo);
+  font-weight: 700;
+  font-size: 0.95rem;
+  min-width: 44px;
+}
+
+/* ── Severidad ───────────────────────────────────── */
+
+.badge-severidad {
+  display: inline-block;
+  padding: 0.4rem 1rem;
+  font-family: var(--fuente-cuerpo);
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: var(--borde-grueso);
+  box-shadow: 2px 2px 0 var(--negro);
+  border-radius: 4px;
+}
+
+.severidad-alto { background: var(--terracota); color: var(--crema); border-color: var(--negro); }
+.severidad-medio { background: var(--dorado); color: var(--negro); border-color: var(--negro); }
+.severidad-bajo { background: var(--verde); color: var(--crema); border-color: var(--negro); }
+
+.badge-severidad-sm {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  font-family: var(--fuente-cuerpo);
+  font-weight: 700;
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: 1.5px solid var(--negro);
+  border-radius: 3px;
+}
+
+.badge-severidad-sm.severidad-alto { background: var(--terracota); color: var(--crema); }
+.badge-severidad-sm.severidad-medio { background: var(--dorado); color: var(--negro); }
+.badge-severidad-sm.severidad-bajo { background: var(--verde); color: var(--crema); }
+
+/* ── Botón siguiente ─────────────────────────────── */
+
+.btn-siguiente {
+  display: block;
+  width: 100%;
+  background: var(--terracota);
+  color: var(--crema);
+  border: var(--borde-grueso);
+  box-shadow: var(--sombra-offset);
+  padding: 0.85rem 2rem;
+  border-radius: var(--radio-boton);
+  font-family: var(--fuente-cuerpo);
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+
+.btn-siguiente:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--negro); }
+.btn-siguiente:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--negro); }
+
+.btn-reiniciar {
+  display: inline-block;
+  background: transparent;
+  color: var(--negro);
+  border: var(--borde-grueso);
+  padding: 0.6rem 1.4rem;
+  border-radius: var(--radio-boton);
+  font-family: var(--fuente-cuerpo);
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  margin-top: 0.75rem;
+  transition: background 0.15s;
+}
+
+.btn-reiniciar:hover { background: rgba(0,0,0,0.05); }
+
+.btn-ver-mapa {
+  display: inline-block;
+  background: transparent;
+  color: var(--verde);
+  border: 1px solid var(--verde);
+  padding: 0.5rem 1.25rem;
+  border-radius: var(--radio-boton);
+  font-family: var(--fuente-cuerpo);
+  font-weight: 600;
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 0.5rem;
+  text-decoration: none;
+}
+
+.btn-ver-mapa:hover {
+  background: var(--verde);
+  color: var(--crema);
+}
+
+/* ── Cartas bloqueadas ───────────────────────────── */
+
+.cartas-bloqueadas {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  max-width: 560px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.carta-locked {
+  background: rgba(0,0,0,0.04);
+  border: 2px dashed rgba(20,20,20,0.4);
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  opacity: 0.7;
+}
+
+.carta-locked h3 { font-size: 0.9rem; color: var(--negro); margin: 0.5rem 0 0.3rem; font-family: var(--fuente-cuerpo); font-weight: 700; text-transform: uppercase; }
+.carta-locked small { font-size: 0.72rem; color: rgba(20,20,20,0.6); }
+.carta-emoji-locked { font-size: 1.8rem; }
+
+/* ── Resumen ─────────────────────────────────────── */
+
+.carta-resumen { text-align: center; }
+
+.resumen-score { display: flex; flex-direction: column; align-items: center; margin-bottom: 1rem; }
+
+.score-numero {
+  font-family: var(--fuente-titulo);
+  font-size: 4.5rem;
+  line-height: 1;
+  color: var(--terracota);
+  text-shadow: 3px 3px 0 rgba(0,0,0,0.12);
+}
+
+.score-label {
+  font-family: var(--fuente-cuerpo);
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.2em;
+  color: rgba(20,20,20,0.6);
+  text-transform: uppercase;
+}
+
+.resumen-titulo { font-family: var(--fuente-titulo); font-size: 1.6rem; color: var(--terracota); margin-bottom: 0.5rem; }
+.resumen-ranking { font-size: 1.05rem; margin-bottom: 1rem; }
+
+.resumen-etapas, .resumen-dimensiones {
+  text-align: left;
+  margin: 1.5rem 0;
+  padding: 1rem;
+  background: rgba(0,0,0,0.04);
+  border: 1.5px solid var(--negro);
+  border-radius: 8px;
+}
+
+.resumen-etapas h3, .resumen-dimensiones h3 {
+  font-family: var(--fuente-cuerpo);
+  font-weight: 700;
+  font-size: 0.78rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--negro);
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--negro);
+}
+
+.resumen-etapa-fila { display: flex; justify-content: space-between; align-items: center; padding: 0.4rem 0; font-size: 0.95rem; }
+
+.resumen-narrativa {
+  text-align: left;
+  font-size: 1rem;
+  line-height: 1.7;
+  margin: 1.5rem 0;
+  padding: 1rem 1.2rem;
+  border-left: 4px solid var(--dorado);
+  background: rgba(232, 197, 71, 0.1);
+  border-radius: 0 8px 8px 0;
+}
+
+.resumen-acciones { display: flex; flex-direction: column; gap: 0.5rem; align-items: center; margin-top: 1.5rem; }
+
+/* ── Escenarios ──────────────────────────────────── */
+
+.esc-intro { font-size: 1.05rem; line-height: 1.7; margin-bottom: 1.5rem; }
+
+.escenarios-grid { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1.5rem; }
+
+.btn-escenario {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 1rem;
+  font-family: var(--fuente-cuerpo);
+  font-weight: 600;
+  font-size: 1rem;
+  background: var(--crema);
+  border: var(--borde-grueso);
+  border-radius: 12px;
+  box-shadow: var(--sombra-offset);
+  cursor: pointer;
+  text-align: left;
+  color: var(--negro);
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+
+.btn-escenario:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--negro); }
+.btn-escenario:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--negro); }
+.btn-escenario.activo { background: var(--dorado); font-weight: 700; }
+
+.esc-emoji { font-size: 1.5rem; }
+
+.escenario-resultado {
+  background: rgba(0,0,0,0.04);
+  border: var(--borde-grueso);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: var(--sombra-offset);
+  margin-bottom: 1.5rem;
+}
+
+.escenario-resultado h3 { font-family: var(--fuente-titulo); font-size: 1.3rem; color: var(--terracota); margin-bottom: 0.5rem; }
+.esc-desc { font-size: 0.9rem; color: rgba(20,20,20,0.7); margin-bottom: 1rem; }
+.esc-datos { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; }
+.esc-dato { text-align: center; }
+.esc-dato-num { display: block; font-family: var(--fuente-titulo); font-size: 2.2rem; color: var(--verde); }
+.esc-dato-label { font-family: var(--fuente-cuerpo); font-weight: 700; font-size: 0.7rem; letter-spacing: 0.15em; color: rgba(20,20,20,0.6); text-transform: uppercase; }
+
+/* ── Mapa ────────────────────────────────────────── */
+
+.mapa-section, #mapa, .mapa-seccion, .seccion-mapa {
+  max-width: 960px;
+  margin: 4rem auto 6rem;
+  padding: 0 1.5rem 4rem;
+  position: relative;
+  z-index: 10;
+}
+
+/* Encabezado del mapa */
+.mapa-encabezado {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.mapa-encabezado h2 {
+  font-family: var(--fuente-titulo);
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  color: var(--terracota);
+  margin: 0 0 0.75rem 0;
+  letter-spacing: 0.02em;
+  text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.1);
+}
+
+.mapa-encabezado p {
+  font-family: var(--fuente-cuerpo);
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--negro);
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+/* Marco tipo carta — contiene el mapa */
+.mapa-marco {
+  background: var(--crema);
+  border: 3px solid var(--negro);
+  border-radius: 12px;
+  box-shadow: var(--sombra-offset);
+  padding: 1.5rem;
+  margin: 0 auto;
+  position: relative;
+  outline: 1px solid var(--dorado);
+  outline-offset: -8px;
+  overflow: hidden;
+}
+
+.mapa-marco::before,
+.mapa-marco::after {
+  content: '✦';
+  position: absolute;
+  color: var(--terracota);
+  font-size: 1rem;
+  opacity: 0.6;
+  z-index: 2;
+}
+
+.mapa-marco::before { top: 0.6rem; left: 0.85rem; }
+.mapa-marco::after { top: 0.6rem; right: 0.85rem; }
+
+/* Plotly chart inside the marco */
+.mapa-marco .cell { padding: 0 !important; }
+.mapa-marco .plotly { background: transparent !important; }
+.mapa-marco .modebar { display: none !important; }
+.mapa-marco svg { background: transparent !important; }
+
+/* Leyenda manual debajo del mapa — chips estilo cartas */
+.mapa-leyenda {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.leyenda-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 1rem;
+  font-family: var(--fuente-cuerpo);
+  font-weight: 700;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: 2px solid var(--negro);
+  border-radius: var(--radio-boton);
+  box-shadow: 2px 2px 0 var(--negro);
+}
+
+.leyenda-bajo { background: var(--verde); color: var(--crema); }
+.leyenda-medio { background: var(--dorado); color: var(--negro); }
+.leyenda-alto { background: var(--terracota); color: var(--crema); }
+
+/* ── Brechas ─────────────────────────────────────── */
+
+.brechas-section {
+  max-width: 800px;
+  margin: 3rem auto;
+  padding: 0 1.5rem 4rem;
+  position: relative;
+  z-index: 10;
+}
+
+.brechas-section h2 { font-family: var(--fuente-titulo); font-size: 1.8rem; text-align: center; color: var(--terracota); margin-bottom: 1rem; }
+.brechas-section p { line-height: 1.7; margin-bottom: 1rem; }
+.brechas-section a { color: var(--terracota); text-decoration: underline; font-weight: 600; }
+
+/* ── Simulador — cartas de lotería ────────────────── */
+
+.simulador-cartas {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  max-width: 500px;
+  margin: 1.5rem auto;
+}
+
+.loteria-card {
+  background: var(--crema);
+  border: 3px solid var(--negro);
+  box-shadow: var(--sombra-offset);
+  border-radius: 12px;
+  overflow: hidden;
+  text-align: center;
+}
+
+.loteria-card-header {
+  background: var(--terracota);
+  color: var(--crema);
+  font-family: var(--fuente-titulo);
+  font-size: 1.1rem;
+  padding: 0.5rem;
+  letter-spacing: 0.05em;
+}
+
+.loteria-card-header.proyectado {
+  background: var(--verde);
+}
+
+.loteria-card-body {
+  padding: 1.5rem 1rem;
+}
+
+.loteria-card-score {
+  font-family: var(--fuente-titulo);
+  font-size: 2.5rem;
+  color: var(--terracota);
+}
+
+.loteria-card-score.proyectado {
+  color: var(--verde);
+}
+
+.loteria-card-img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  margin-bottom: 0.5rem;
+}
+
+.loteria-card-footer {
+  background: rgba(0,0,0,0.05);
+  padding: 0.4rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--negro);
+}
+
+.loteria-card-name {
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin-top: 0.25rem;
+  color: var(--negro);
+}
+
+.mejora-badge {
+  display: inline-block;
+  background: var(--verde);
+  color: var(--crema);
+  font-family: var(--fuente-cuerpo);
+  font-weight: 700;
+  font-size: 0.85rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 50px;
+  border: 1px solid var(--negro);
+  margin-top: 0.5rem;
+}
+
+/* ── Secciones compartidas ───────────────────────── */
+
+.seccion-titulo {
+  font-family: var(--fuente-titulo);
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  color: var(--terracota);
+  text-align: center;
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid var(--terracota);
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.seccion-subtitulo {
+  font-size: 1rem;
+  color: rgba(20,20,20,0.65);
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto 2rem;
+  line-height: 1.6;
+}
+
+/* ── KPIs ────────────────────────────────────────── */
+
+.seccion-kpis {
+  padding: 4rem 8%;
+  background: var(--crema);
+  position: relative;
+  z-index: 1;
+}
+
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  max-width: 900px;
+  margin: 2rem auto 0;
+}
+
+.kpi-card {
+  background: var(--crema);
+  border: var(--borde-grueso);
+  box-shadow: var(--sombra-offset);
+  border-radius: 8px;
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.kpi-valor {
+  font-family: var(--fuente-titulo);
+  font-size: 2.5rem;
+  line-height: 1;
+  margin-bottom: 0.25rem;
+}
+
+.kpi-label {
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 0.25rem;
+}
+
+.kpi-nota {
+  font-size: 0.8rem;
+  color: rgba(20,20,20,0.6);
+}
+
+/* ── Ranking ─────────────────────────────────────── */
+
+.seccion-ranking {
+  padding: 4rem 8%;
+  position: relative;
+  z-index: 1;
+}
+
+.ranking-filtros {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+  justify-content: center;
+}
+
+.filtro-btn {
+  background: var(--crema);
+  border: var(--borde-grueso);
+  box-shadow: 2px 2px 0 var(--negro);
+  padding: 0.4rem 1rem;
+  border-radius: 50px;
+  font-family: var(--fuente-cuerpo);
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+
+.filtro-btn:hover,
+.filtro-btn.activo {
+  background: var(--negro);
+  color: var(--crema);
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 var(--negro);
+}
+
+.tabla-ranking {
+  width: 100%;
+  overflow-x: auto;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.tabla-ranking table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--fuente-cuerpo);
+}
+
+.tabla-ranking th {
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.75rem;
+  border-bottom: 2px solid var(--negro);
+  text-align: left;
+}
+
+.tabla-ranking td {
+  padding: 0.6rem 0.75rem;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+  font-size: 0.9rem;
+}
+
+.tabla-ranking tr:hover td {
+  background: rgba(184,67,42,0.04);
+}
+
+.irte-barra-track {
+  background: rgba(0,0,0,0.08);
+  border: 1px solid rgba(0,0,0,0.15);
+  height: 8px;
+  border-radius: 4px;
+  overflow: hidden;
+  min-width: 100px;
+}
+
+.irte-barra-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.4s ease;
+}
+
+.nivel-badge {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  border: 1px solid var(--negro);
+}
+
+.nivel-alto       { background: var(--terracota); color: var(--crema); }
+.nivel-medio-alto { background: #E8A04A; color: var(--negro); }
+.nivel-medio      { background: #4A8BC4; color: var(--crema); }
+.nivel-bajo       { background: var(--verde); color: var(--crema); }
+
+/* ── ODS ─────────────────────────────────────────── */
+
+.seccion-ods {
+  padding: 4rem 8%;
+  background: rgba(26, 26, 46, 0.96);
+  position: relative;
+  z-index: 1;
+}
+
+.seccion-ods .seccion-titulo {
+  color: var(--dorado);
+  border-color: rgba(232,197,71,0.3);
+}
+
+.seccion-ods .seccion-subtitulo {
+  color: rgba(255,255,255,0.7);
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto 2rem;
+}
+
+.ods-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.ods-card {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(232,197,71,0.25);
+  border-radius: 8px;
+  padding: 1.25rem;
+}
+
+.ods-numero {
+  display: inline-block;
+  background: var(--dorado);
+  color: var(--negro);
+  font-family: var(--fuente-titulo);
+  font-size: 0.9rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+  margin-bottom: 0.75rem;
+  letter-spacing: 0.05em;
+}
+
+.ods-titulo {
+  color: #fff;
+  font-family: var(--fuente-cuerpo);
+  font-weight: 700;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.ods-desc {
+  color: rgba(255,255,255,0.6);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.ods-dato-destacado {
+  background: rgba(232,197,71,0.1);
+  border: 1px solid rgba(232,197,71,0.4);
+  border-radius: 8px;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.ods-dato-valor {
+  font-family: var(--fuente-titulo);
+  font-size: 2.5rem;
+  color: var(--dorado);
+}
+
+.ods-dato-label {
+  color: rgba(255,255,255,0.65);
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+}
+
+/* ── Gobernanza ──────────────────────────────────── */
+
+.seccion-gobernanza {
+  padding: 4rem 8%;
+  position: relative;
+  z-index: 1;
+}
+
+.gobernanza-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  max-width: 900px;
+  margin: 2rem auto;
+}
+
+.gobernanza-card {
+  background: var(--crema);
+  border: var(--borde-grueso);
+  box-shadow: var(--sombra-offset);
+  border-radius: 8px;
+  padding: 1.5rem;
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+
+.gobernanza-card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--negro);
+}
+
+.gobernanza-titulo {
+  font-family: var(--fuente-cuerpo);
+  font-weight: 700;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.gobernanza-desc {
+  font-size: 0.88rem;
+  color: rgba(20,20,20,0.7);
+  line-height: 1.5;
+  margin-bottom: 0.75rem;
+}
+
+.gobernanza-badge {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--crema);
+  border: 1px solid var(--negro);
+}
+
+.gobernanza-nota {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 1rem 1.25rem;
+  background: rgba(184,67,42,0.06);
+  border-left: 3px solid var(--terracota);
+  border-radius: 0 8px 8px 0;
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
+/* ── Scrollbar ───────────────────────────────────── */
+
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: rgba(0,0,0,0.05); }
+::-webkit-scrollbar-thumb { background: var(--negro); }
+::-webkit-scrollbar-thumb:hover { background: var(--terracota); }
+
+/* ── Responsive ──────────────────────────────────── */
+
+@media (max-width: 768px) {
+  .pantalla-seleccion {
+    grid-template-columns: 1fr;
+    padding: 3rem 1.5rem;
+    min-height: auto;
+    gap: 2rem;
+  }
+  .titulo-hero {
+    text-align: center;
+    font-size: clamp(3rem, 12vw, 5rem);
+  }
+  .intro-texto {
+    text-align: center;
+    max-width: 100%;
+  }
+  .irte-explicacion { max-width: 100%; }
+  .intro-bloque { align-items: center; }
+  .campo label { text-align: center; }
+  .genero-btn { padding: 1rem 0.5rem; }
+  .genero-btn img { width: 70px; height: 70px; }
+  .carta, .carta-etapa { margin: 0 1rem 1.5rem; padding: 1.5rem; }
+  .footer-contenido { flex-direction: column; text-align: center; }
+  .footer-nav { gap: 1rem; }
+  .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+  .gobernanza-grid { grid-template-columns: 1fr; }
+  .ods-grid { grid-template-columns: 1fr 1fr; }
+  .simulador-cartas { grid-template-columns: 1fr; max-width: 260px; }
+}
+
+@media (max-width: 640px) {
+  .juego-container { padding: 1.5rem 1rem; }
+  .pantalla-seleccion {
+    gap: 1.5rem;
+    padding: 2rem 1rem;
+  }
+  .genero-btns { gap: 1rem; }
+  .genero-btn img { width: 70px; height: 70px; }
+  .borde-loteria { display: none; }
+  .footer-nav { gap: 0.75rem; }
+  .barra-label { min-width: 70px; font-size: 0.7rem; }
+  .cartas-bloqueadas { grid-template-columns: 1fr; }
+  .esc-datos { flex-direction: column; gap: 0.75rem; }
+  .resumen-acciones { align-items: stretch; }
+}
