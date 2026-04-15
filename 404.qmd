@@ -1,0 +1,22 @@
+---
+title: "Pagina no encontrada"
+format:
+  html:
+    page-layout: full
+    toc: false
+---
+
+```{=html}
+<div style="text-align:center; padding:4rem 2rem;">
+  <h1 style="font-size:3rem; color:#B8432A;">404</h1>
+  <p style="font-size:1.2rem; color:#555; margin:1rem 0;">
+    Esta pagina no existe o fue movida.
+  </p>
+  <a href="dashboard/index.html"
+     style="display:inline-block; background:#B8432A; color:#EBE4D1;
+            font-size:1.1rem; padding:.8rem 2rem; border-radius:8px;
+            text-decoration:none; border:2px solid #141414; margin-top:1rem;">
+    Ir al inicio
+  </a>
+</div>
+```

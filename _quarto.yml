@@ -16,6 +16,7 @@ project:
     - dashboard/assets/
 
 website:
+  site-url: "https://liedbaez.github.io/hackods.github.io/"
   title: "Tlahtoa Data"
   description: "Observatorio Narrativo de Trayectorias de Desigualdad en México"
   navbar:
