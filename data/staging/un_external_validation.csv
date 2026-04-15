@@ -1,0 +1,6 @@
+indicator,mexico_value,un_target,year,source,notes
+Pobreza multidimensional,36.3,<10,2022,CONEVAL/ONU,"Meta ODS 1.2: reducir a la mitad la pobreza"
+Mortalidad infantil (por 1000),14.6,<12,2022,INEGI/UNICEF,"Meta ODS 3.2"
+Rezago educativo,16.4,<5,2022,SEP/UNESCO,"Meta ODS 4.6"
+Acceso agua potable,89.2,100,2022,INEGI/OMS,"Meta ODS 6.1"
+Empleo formal,36.4,>70,2022,IMSS/OIT,"Meta ODS 8.3"

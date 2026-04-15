@@ -1,0 +1,78 @@
+{
+  "generated_at": "2026-04-15",
+  "total_states": 32,
+  "variables": {
+    "tasa_pobreza": {
+      "count": 32,
+      "missing": 0,
+      "min": 14.2,
+      "max": 75.5,
+      "mean": 39.303,
+      "source": "CONEVAL/INEGI/SEP/CONAPO 2022"
+    },
+    "tasa_pobreza_extrema": {
+      "count": 32,
+      "missing": 0,
+      "min": 0.9,
+      "max": 28.1,
+      "mean": 7.788,
+      "source": "CONEVAL/INEGI/SEP/CONAPO 2022"
+    },
+    "rezago_educativo": {
+      "count": 32,
+      "missing": 0,
+      "min": 10.8,
+      "max": 45.3,
+      "mean": 23.594,
+      "source": "CONEVAL/INEGI/SEP/CONAPO 2022"
+    },
+    "mortalidad_infantil": {
+      "count": 32,
+      "missing": 0,
+      "min": 8.4,
+      "max": 23.8,
+      "mean": 13.641,
+      "source": "CONEVAL/INEGI/SEP/CONAPO 2022"
+    },
+    "acceso_agua": {
+      "count": 32,
+      "missing": 0,
+      "min": 1.8,
+      "max": 43.2,
+      "mean": 13.778,
+      "source": "CONEVAL/INEGI/SEP/CONAPO 2022"
+    },
+    "acceso_drenaje": {
+      "count": 32,
+      "missing": 0,
+      "min": 1.2,
+      "max": 38.6,
+      "mean": 11.009,
+      "source": "CONEVAL/INEGI/SEP/CONAPO 2022"
+    },
+    "abandono_secundaria": {
+      "count": 32,
+      "missing": 0,
+      "min": 2.4,
+      "max": 14.2,
+      "mean": 6.737,
+      "source": "CONEVAL/INEGI/SEP/CONAPO 2022"
+    },
+    "fecundidad_adolescente": {
+      "count": 32,
+      "missing": 0,
+      "min": 34.7,
+      "max": 98.3,
+      "mean": 65.0,
+      "source": "CONEVAL/INEGI/SEP/CONAPO 2022"
+    },
+    "formalidad_laboral": {
+      "count": 32,
+      "missing": 0,
+      "min": 12.1,
+      "max": 63.4,
+      "mean": 36.381,
+      "source": "CONEVAL/INEGI/SEP/CONAPO 2022"
+    }
+  }
+}

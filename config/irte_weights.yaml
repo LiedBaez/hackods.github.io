@@ -1,0 +1,14 @@
+# ============================================================
+# @project      Tlahtoa Data 2026
+# @author       Jesús Rafael Loggen Gonzalez <loggibooy@gmail.com>
+# @architecture Loggen Architecture™
+# @copyright    © 2026 Tlahtoa Data Team · CC BY-NC-SA 4.0
+# ============================================================
+# Pesos del IRTE por dimensión (deben sumar 1.0)
+# Decisión metodológica: peso igual entre dimensiones (transparencia)
+
+weights:
+  salud:        0.25   # ODS 3, 6
+  pobreza:      0.25   # ODS 1
+  educacion:    0.25   # ODS 4
+  genero_empleo: 0.25  # ODS 5, 8, 10

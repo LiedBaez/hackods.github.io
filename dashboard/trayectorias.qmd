@@ -14,7 +14,6 @@ format:
   @hackods      HackODS UNAM 2026 · ODS 1, 4, 5, 6, 10
 -->
 
-
 <!--
  * ------------------------------------------------------------
  * @project      Tlahtoa_Data_2026
@@ -163,6 +162,80 @@ function renderTrayectoria(clave) {{
 ```
 
 ---
+
+---
+
+### Comparativa de dimensiones — radar por estado
+
+```{python}
+#| echo: false
+#| warning: false
+import pandas as pd
+import plotly.graph_objects as go
+
+# cargar datos normalizados por dimensión
+df_dims = pd.read_csv(Path(".") / "data/processed/indicadores_normalizados.csv")
+
+# Top 5 mayor riesgo y top 5 menor riesgo
+top5_alto = df_dims.nlargest(5, "tasa_pobreza_norm")[["nombre","tasa_pobreza_norm",
+    "mortalidad_infantil_norm","rezago_educativo_norm","fecundidad_adolescente_norm"]]
+top5_bajo = df_dims.nsmallest(5, "tasa_pobreza_norm")[["nombre","tasa_pobreza_norm",
+    "mortalidad_infantil_norm","rezago_educativo_norm","fecundidad_adolescente_norm"]]
+
+categorias = ["Pobreza", "Salud", "Educación", "Género/Empleo"]
+
+fig = go.Figure()
+
+colores_alto = ["#c0392b","#e74c3c","#e67e22","#d35400","#c0392b"]
+colores_bajo = ["#27ae60","#2ecc71","#16a085","#1abc9c","#27ae60"]
+
+for i, (_, row) in enumerate(top5_alto.iterrows()):
+    vals = [row["tasa_pobreza_norm"], row["mortalidad_infantil_norm"],
+            row["rezago_educativo_norm"], row["fecundidad_adolescente_norm"]]
+    vals_closed = vals + [vals[0]]
+    fig.add_trace(go.Scatterpolar(
+        r=vals_closed,
+        theta=categorias + [categorias[0]],
+        fill="toself",
+        fillcolor=colores_alto[i] + "22",
+        line=dict(color=colores_alto[i], width=1.5),
+        name=row["nombre"],
+        legendgroup="alto",
+        legendgrouptitle_text="Mayor riesgo" if i == 0 else None,
+    ))
+
+for i, (_, row) in enumerate(top5_bajo.iterrows()):
+    vals = [row["tasa_pobreza_norm"], row["mortalidad_infantil_norm"],
+            row["rezago_educativo_norm"], row["fecundidad_adolescente_norm"]]
+    vals_closed = vals + [vals[0]]
+    fig.add_trace(go.Scatterpolar(
+        r=vals_closed,
+        theta=categorias + [categorias[0]],
+        fill="toself",
+        fillcolor=colores_bajo[i] + "22",
+        line=dict(color=colores_bajo[i], width=1.5, dash="dot"),
+        name=row["nombre"],
+        legendgroup="bajo",
+        legendgrouptitle_text="Menor riesgo" if i == 0 else None,
+    ))
+
+fig.update_layout(
+    polar=dict(
+        radialaxis=dict(visible=True, range=[0, 1], tickfont=dict(size=9)),
+        angularaxis=dict(tickfont=dict(size=11)),
+    ),
+    height=480,
+    margin=dict(l=60, r=60, t=40, b=40),
+    legend=dict(font=dict(size=10)),
+    plot_bgcolor="white", paper_bgcolor="white",
+    font=dict(family="Georgia, serif", size=11),
+    title=dict(text="Riesgo por dimensión — top 5 vs bottom 5 estados", font=dict(size=13)),
+)
+fig.show()
+```
+
+*Radar comparativo entre los 5 estados de mayor y menor riesgo en cada dimensión del IRTE.*
+*Fuente: pipeline IRTE — CONEVAL 2022, INEGI 2020, SEP 2022, CONAPO 2021.*
 
 ::: {.callout-important}
 La trayectoria refleja el contexto estructural del territorio, no el destino individual de ninguna persona.

@@ -6,15 +6,6 @@ name: Quarto Render + Deploy → GitHub Pages
 # @copyright    © 2026 Tlahtoa Data Team · CC BY-NC-SA 4.0
 # @hackods      HackODS UNAM 2026
 # ============================================================
-#
-# Stack obligatorio HackODS:
-#   Quarto · Python · Plotly · uv
-#
-# Flujo:
-#   1. uv sync — instala dependencias
-#   2. Verifica integridad de datos
-#   3. quarto render — compila QMDs a HTML
-#   4. Deploy docs/ → GitHub Pages
 
 on:
   push:
@@ -52,7 +43,10 @@ jobs:
           version: "latest"
 
       - name: Install dependencies with uv
-        run: uv sync
+        run: |
+          uv pip install --system \
+            pandas plotly pyyaml pydantic openpyxl \
+            jsonschema requests beautifulsoup4
 
       - name: Install Quarto
         uses: quarto-dev/quarto-actions/setup@v2
@@ -61,7 +55,7 @@ jobs:
 
       - name: Verify data integrity
         run: |
-          uv run python3 -c "
+          python3 -c "
           import json, os, sys
 
           checks = [
@@ -69,45 +63,47 @@ jobs:
             'data/processed/scenario_templates.json',
             'data/processed/irte_por_estado.csv',
             'data/processed/indicadores_normalizados.csv',
-            'data/static_api/simulations.json',
+            'data/processed/comparison_payload.json',
+            'data/metadata/provenance_manifest.json',
+            'data/metadata/data_quality_report.json',
+            'data/metadata/irte_sensitivity.csv',
+            'data/metadata/source_registry.csv',
+            'data/staging/un_external_validation.csv',
+            'config/irte_weights.yaml',
             'dashboard/mexico.geojson',
           ]
           failed = []
           for f in checks:
-              if os.path.exists(f):
-                  print(f'  ✅ {f}')
-              else:
-                  print(f'  ❌ FALTA: {f}')
-                  failed.append(f)
+              ok = os.path.exists(f)
+              print(f'  {\"✅\" if ok else \"❌\"} {f}')
+              if not ok: failed.append(f)
 
           if failed:
+              print(f'\nFaltan {len(failed)} archivos — abortando deploy')
               sys.exit(1)
 
-          # IRTE: 32 estados
           d = json.load(open('data/processed/state_panel.json'))
-          assert len(d['estados']) == 32, f'ERROR: {len(d[\"estados\"])} estados'
-          print(f'  ✅ state_panel: {len(d[\"estados\"])} estados')
+          assert len(d['estados']) == 32
+          print(f'\n  ✅ 32 estados OK')
 
-          # Simulations: 480 combos
           s = json.load(open('data/static_api/simulations.json'))
           keys = [k for k in s if not k.startswith('_')]
           total = sum(sum(len(v) for v in s[k]['simulations'].values()) for k in keys)
-          assert total == 480, f'ERROR: {total} != 480 combos'
-          print(f'  ✅ simulations: {total} combos pre-calculados')
-          print()
-          print('  Todos los datos verificados ✅')
+          assert total == 480
+          print(f'  ✅ 480 combos OK')
+          print(f'\n  Todo verificado — continuando con render')
           "
 
       - name: Render Quarto site
         run: |
-          uv run quarto render
-          echo "✅ Quarto render completado"
-          ls docs/ | head -10
+          quarto render
+          echo "✅ Render completado"
+          ls docs/
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
-      - name: Upload artifact (docs/)
+      - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: docs
